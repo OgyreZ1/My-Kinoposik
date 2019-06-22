@@ -25,13 +25,19 @@ function requestApi(method, url) {
         }
 
         const output = JSON.parse(request.responseText);
-
+        console.log(output);
         let inner = '';
 
         output.results.forEach(function (item) {
             let itemName = item.name || item.title;
-            console.log(itemName);
-            inner += `<div class="col-12">${itemName}</div>`;
+            let dateReleased = item.release_date || item.first_air_date;
+            let mediaType = item.media_type;
+            inner += `<div class="col-12">
+            ${itemName} </br>`;
+            if (mediaType == 'tv') inner += `Первая серия: `;
+            if (mediaType == 'movie') inner += 'Дата выпуска: ';
+            inner += `${dateReleased} </br> </br>
+            </div >`;
         });
 
         movies.innerHTML = inner;
